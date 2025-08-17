@@ -1,0 +1,44 @@
+# -----------------------------
+# Archivos y carpetas de compilación
+# -----------------------------
+/bin/
+/build/
+/out/
+/target/
+
+# -----------------------------
+# Archivos de dependencias (Maven / Gradle)
+# -----------------------------
+.mvn/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+**/dependency-reduced-pom.xml
+
+# -----------------------------
+# Archivos generados por IDEs
+# -----------------------------
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# -----------------------------
+# Archivos temporales del sistema
+# -----------------------------
+*.class
+*.log
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Archivos de pruebas / reports
+# -----------------------------
+/test-output/
+/hs_err_pid*
