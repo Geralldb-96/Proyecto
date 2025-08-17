@@ -1,44 +1,33 @@
-# -----------------------------
-# Archivos y carpetas de compilación
-# -----------------------------
-/bin/
-/build/
-/out/
-/target/
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# -----------------------------
-# Archivos de dependencias (Maven / Gradle)
-# -----------------------------
-.mvn/
-.gradle/
-!gradle/wrapper/gradle-wrapper.jar
-**/dependency-reduced-pom.xml
-
-# -----------------------------
-# Archivos generados por IDEs
-# -----------------------------
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
-.idea/
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
 *.ipr
-*.iws
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
 .vscode/
-
-# -----------------------------
-# Archivos temporales del sistema
-# -----------------------------
-*.class
-*.log
-*.tmp
-*.swp
-*~
-.DS_Store
-Thumbs.db
-
-# -----------------------------
-# Archivos de pruebas / reports
-# -----------------------------
-/test-output/
-/hs_err_pid*
