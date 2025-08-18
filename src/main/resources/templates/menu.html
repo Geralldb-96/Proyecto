@@ -18,7 +18,7 @@
 
         h1 {
             font-size: 3em;
-            margin-bottom: 100px; /* más separación debajo del título */
+            margin-bottom: 80px;
         }
 
         /* Modal */
@@ -37,14 +37,12 @@
 
         #modal-content {
             background: linear-gradient(to bottom, #0a1f44, #000000);
-            padding: 30px 0px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
             width: 400px;
-            max-width: 30%;
             border: 3px solid white;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            font-size: 1em;
         }
 
         #modal h2 {
@@ -52,21 +50,17 @@
             margin-bottom: 10px;
         }
 
-        #modal p {
-            font-size: 1em;
-        }
-
         input[type="text"] {
-            padding: 14px;
+            padding: 12px;
             font-size: 1.2em;
-            width: 70%;
+            width: 60%;
             border-radius: 6px;
             border: none;
             margin-top: 15px;
         }
 
         button {
-            padding: 14px 28px;
+            padding: 12px 25px;
             font-size: 1.2em;
             margin-top: 20px;
             cursor: pointer;
@@ -81,20 +75,19 @@
             background-color: #3e5ca5;
         }
 
-        /* Menú principal en 2x2 con más espacio */
+        /* Menú principal en 2x2 */
         #menuOpciones {
             display: none;
-            grid-template-columns: repeat(2, 220px); /* ancho uniforme */
-            grid-gap: 60px;  /* espacio entre botones horizontal y vertical */
+            grid-template-columns: repeat(2, 220px);
+            grid-gap: 60px;
             justify-content: center;
             align-items: center;
-            margin-bottom: 50px; /* espacio debajo del menú si es necesario */
+            margin-bottom: 50px;
         }
 
-        /* Botones con imagen de fondo y altura uniforme */
         #menuOpciones div {
-            height: 140px; /* más alto para aire interno */
-            display: flex;  
+            height: 140px;
+            display: flex;
             justify-content: flex-end;
             align-items: center;
             padding-right: 15px;
@@ -112,31 +105,41 @@
         #btnEdad { background-image: url('/Edad.png'); }
         #btnX { background-image: url('/X.png'); }
         #btnAdivina { background-image: url('/Adivina.png'); }
+
+        /* Botón salir */
         #btnSalir {
+            display: none; 
             position: fixed;
-            bottom: 20px;   /* 20px desde abajo */
-            right: 20px;    /* 20px desde la derecha */
+            bottom: 20px;
+            right: 20px;
             padding: 10px 20px;
             font-size: 1em;
             border: none;
             border-radius: 8px;
-            background-color: #ff4d4d; /* rojo para resaltar */
+            background-color: #ff4d4d;
             color: white;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(255,255,255,0.3);
             transition: all 0.3s;
-            z-index: 15;    /* por encima del menú */
+            z-index: 15;
         }
 
         #btnSalir:hover {
             background-color: #ff1a1a;
         }
 
-
+        /* Secciones internas */
+        .seccion {
+            display: none;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    
+    <h1 id="saludo">¡Hola!</h1>
 
     <!-- Modal de bienvenida -->
     <div id="modal">
@@ -150,42 +153,65 @@
     </div>
 
     <!-- Menú principal -->
-    <h1 id="saludo">¡Hola!</h1>
     <div id="menuOpciones">
         <div id="btnClima" onclick="irClima()">Clima</div>
-        <div id="btnEdad">Edad</div>
-        <div id="btnX">1 al X</div>
-        <div id="btnAdivina">Adivina ?</div>
+        <div id="btnEdad" onclick="mostrarSeccion('edad')">Edad</div>
+        <div id="btnX" onclick="mostrarSeccion('x')">1 al X</div>
+        <div id="btnAdivina" onclick="mostrarSeccion('adivina')">Adivina ?</div>
     </div>
+
+    <!-- Botón salir -->
     <button id="btnSalir" onclick="salir()">Salir</button>
-    <script>        
-        window.onload = function() {
-        const mostrarModal = /*[[${mostrarModal}]]*/ false;
-        if(mostrarModal){
-            document.getElementById('modal').style.display = 'flex';
-            document.getElementById('menuOpciones').style.display = 'none';
-        }
+
+    <!-- Secciones internas -->
+    <div id="clima" class="seccion">Sección Clima</div>
+    <div id="edad" class="seccion">Sección Edad</div>
+    <div id="x" class="seccion">Sección 1 al X</div>
+    <div id="adivina" class="seccion">Sección Adivina</div>
+
+    <script>
         function aceptarNombre() {
             const nombre = document.getElementById('nombreInput').value || "Invitado";
+            sessionStorage.setItem('nombreUsuario', nombre); // Guarda el nombre en sessionStorage
             document.getElementById('saludo').textContent = `¡Hola, ${nombre}!`;
-
-            // Ocultar modal y mostrar menú
             document.getElementById('modal').style.display = 'none';
             document.getElementById('menuOpciones').style.display = 'grid';
         }
-        function irClima() {
-            window.location.href = '/clima';
+
+        function irClima() { window.location.href = '/clima'; }
+        function irEdad() { window.location.href = '/edad'; }
+        function irX() { window.location.href = '/x'; }
+        function irAdivina() { window.location.href = '/adivina'; }
+
+        function mostrarSeccion(seccionId) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(s => s.style.display = 'none');
+
+            // Mostrar la sección seleccionada
+            document.getElementById(seccionId).style.display = 'block';
         }
+
         function salir() {
-            // Oculta el menú
             document.getElementById('menuOpciones').style.display = 'none';
-            // Muestra nuevamente el modal
             document.getElementById('modal').style.display = 'flex';
-            // Limpia el input del nombre
             document.getElementById('nombreInput').value = '';
-            // Restablece saludo genérico
             document.getElementById('saludo').textContent = '¡Hola!';
+            document.getElementById('btnSalir').style.display = 'none';
+
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(s => s.style.display = 'none');
         }
+        window.onload = function() {
+            const nombreGuardado = sessionStorage.getItem('nombreUsuario');
+            if (nombreGuardado) {
+                document.getElementById('saludo').textContent = `¡Hola, ${nombreGuardado}!`;
+                document.getElementById('modal').style.display = 'none';
+                document.getElementById('menuOpciones').style.display = 'grid';
+            }
+        };
+
     </script>
 </body>
 </html>

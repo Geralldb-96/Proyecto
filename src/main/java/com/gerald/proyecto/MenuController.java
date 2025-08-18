@@ -16,4 +16,12 @@ public class MenuController {
     public String clima() {
         return "clima"; // archivo clima.html
     }
+    @GetMapping("/x")
+    public String x() {
+        return "x"; // archivo clima.html
+    }
+    @GetMapping("/adivina")
+    public String adivina() {
+        return "adivina"; // archivo clima.html
+    }
 }
