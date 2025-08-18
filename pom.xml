@@ -34,7 +34,7 @@
     </properties>
 
     <dependencies>
-        <!-- Dependency for Thymeleaf (used for rendering HTML views) -->
+        <!-- Dependency for Thyself (used for rendering HTML views) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

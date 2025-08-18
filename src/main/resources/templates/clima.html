@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clima</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a1f44, #000000);
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 { font-size: 3em; }
+        a { color: #1e3c72; margin-top: 20px; text-decoration: none; font-size: 1.2em; }
+        a:hover { color: #3e5ca5; }
+    </style>
+</head>
+<body>
+    <h1>Página Clima</h1>
+    <a th:href="@{/}">Volver al Menú</a>
+</body>
+</html>

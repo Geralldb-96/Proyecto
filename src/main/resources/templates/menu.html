@@ -1,21 +1,191 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Principal</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a1f44, #000000);
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 100px; /* más separación debajo del título */
+        }
+
+        /* Modal */
+        #modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #modal-content {
+            background: linear-gradient(to bottom, #0a1f44, #000000);
+            padding: 30px 0px;
+            border-radius: 15px;
+            text-align: center;
+            width: 400px;
+            max-width: 30%;
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            font-size: 1em;
+        }
+
+        #modal h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        #modal p {
+            font-size: 1em;
+        }
+
+        input[type="text"] {
+            padding: 14px;
+            font-size: 1.2em;
+            width: 70%;
+            border-radius: 6px;
+            border: none;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 14px 28px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #1e3c72;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background-color: #3e5ca5;
+        }
+
+        /* Menú principal en 2x2 con más espacio */
+        #menuOpciones {
+            display: none;
+            grid-template-columns: repeat(2, 220px); /* ancho uniforme */
+            grid-gap: 60px;  /* espacio entre botones horizontal y vertical */
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px; /* espacio debajo del menú si es necesario */
+        }
+
+        /* Botones con imagen de fondo y altura uniforme */
+        #menuOpciones div {
+            height: 140px; /* más alto para aire interno */
+            display: flex;  
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            color: white;
+            background-size: 110px;
+            background-repeat: no-repeat;
+        }
+
+        #btnClima { background-image: url('/clima.png'); }
+        #btnEdad { background-image: url('/Edad.png'); }
+        #btnX { background-image: url('/X.png'); }
+        #btnAdivina { background-image: url('/Adivina.png'); }
+        #btnSalir {
+            position: fixed;
+            bottom: 20px;   /* 20px desde abajo */
+            right: 20px;    /* 20px desde la derecha */
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #ff4d4d; /* rojo para resaltar */
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+            transition: all 0.3s;
+            z-index: 15;    /* por encima del menú */
+        }
+
+        #btnSalir:hover {
+            background-color: #ff1a1a;
+        }
+
+
+    </style>
 </head>
 <body>
-    <h1>Bienvenido al Menú</h1>
-    <ul>
-        <li><a href="/opcion1">Opción 1</a></li>
-        <li><a href="/opcion2">Opción 2</a></li>
-        <li><a href="/opcion3">Opción 3</a></li>
-        <li><a href="/opcion4">Opción 4</a></li>
-        <li><a href="/opcion5">Opción 5</a></li>
-        <li><a href="/opcion6">Opción 6</a></li>
-        <li><a href="/salir">Salir</a></li>
-    </ul>
+    
+
+    <!-- Modal de bienvenida -->
+    <div id="modal">
+        <div id="modal-content">
+            <h2>Bienvenido!!</h2>
+            <p>Ingrese su nombre:</p>
+            <input type="text" id="nombreInput" placeholder="Tu nombre">
+            <br>
+            <button onclick="aceptarNombre()">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- Menú principal -->
+    <h1 id="saludo">¡Hola!</h1>
+    <div id="menuOpciones">
+        <div id="btnClima" onclick="irClima()">Clima</div>
+        <div id="btnEdad">Edad</div>
+        <div id="btnX">1 al X</div>
+        <div id="btnAdivina">Adivina ?</div>
+    </div>
+    <button id="btnSalir" onclick="salir()">Salir</button>
+    <script>        
+        window.onload = function() {
+        const mostrarModal = /*[[${mostrarModal}]]*/ false;
+        if(mostrarModal){
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('menuOpciones').style.display = 'none';
+        }
+        function aceptarNombre() {
+            const nombre = document.getElementById('nombreInput').value || "Invitado";
+            document.getElementById('saludo').textContent = `¡Hola, ${nombre}!`;
+
+            // Ocultar modal y mostrar menú
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('menuOpciones').style.display = 'grid';
+        }
+        function irClima() {
+            window.location.href = '/clima';
+        }
+        function salir() {
+            // Oculta el menú
+            document.getElementById('menuOpciones').style.display = 'none';
+            // Muestra nuevamente el modal
+            document.getElementById('modal').style.display = 'flex';
+            // Limpia el input del nombre
+            document.getElementById('nombreInput').value = '';
+            // Restablece saludo genérico
+            document.getElementById('saludo').textContent = '¡Hola!';
+        }
+    </script>
 </body>
 </html>
-

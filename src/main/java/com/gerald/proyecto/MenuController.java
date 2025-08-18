@@ -1,14 +1,19 @@
 package com.gerald.proyecto;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MenuController {
 
-    // Mapea la ruta raíz "/" y devuelve la vista "menu"
-    @GetMapping("/")
-    public String mostrarMenu() {
-        return "menu";  // Spring Boot busca 'menu.html' en src/main/resources/templates
+    @GetMapping("/menu")
+    public String menu(Model model) {
+        model.addAttribute("nombreUsuario", ""); // lo llenaremos con JS
+        return "menu";
+    }
+    @GetMapping("/clima")
+    public String clima() {
+        return "clima"; // archivo clima.html
     }
 }
