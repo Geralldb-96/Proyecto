@@ -155,9 +155,9 @@
     <!-- Menú principal -->
     <div id="menuOpciones">
         <div id="btnClima" onclick="irClima()">Clima</div>
-        <div id="btnEdad" onclick="mostrarSeccion('edad')">Edad</div>
-        <div id="btnX" onclick="mostrarSeccion('x')">1 al X</div>
-        <div id="btnAdivina" onclick="mostrarSeccion('adivina')">Adivina ?</div>
+        <div id="btnEdad" onclick="irEdad()">Edad</div>
+        <div id="btnX" onclick="irX()">1 al X</div>
+        <div id="btnAdivina" onclick="irAdivina()">Adivina ?</div>
     </div>
 
     <!-- Botón salir -->
@@ -171,26 +171,26 @@
 
     <script>
         function aceptarNombre() {
-            const nombre = document.getElementById('nombreInput').value || "Invitado";
-            sessionStorage.setItem('nombreUsuario', nombre); // Guarda el nombre en sessionStorage
-            document.getElementById('saludo').textContent = `¡Hola, ${nombre}!`;
+            const input = document.getElementById('nombreInput').value.trim();
+            if (input === "") {
+                alert("Por favor, ingrese un nombre válido.");
+                return;
+            }
+
+            // Guardar nombre
+            sessionStorage.setItem('nombreUsuario', input);
+
+            // Mostrar menú
+            document.getElementById('saludo').textContent = `¡Hola, ${input}!`;
             document.getElementById('modal').style.display = 'none';
             document.getElementById('menuOpciones').style.display = 'grid';
+            document.getElementById('btnSalir').style.display = 'block';
         }
 
         function irClima() { window.location.href = '/clima'; }
         function irEdad() { window.location.href = '/edad'; }
         function irX() { window.location.href = '/x'; }
         function irAdivina() { window.location.href = '/adivina'; }
-
-        function mostrarSeccion(seccionId) {
-            // Ocultar todas las secciones
-            const secciones = document.querySelectorAll('.seccion');
-            secciones.forEach(s => s.style.display = 'none');
-
-            // Mostrar la sección seleccionada
-            document.getElementById(seccionId).style.display = 'block';
-        }
 
         function salir() {
             document.getElementById('menuOpciones').style.display = 'none';
@@ -199,19 +199,24 @@
             document.getElementById('saludo').textContent = '¡Hola!';
             document.getElementById('btnSalir').style.display = 'none';
 
-            // Ocultar todas las secciones
             const secciones = document.querySelectorAll('.seccion');
             secciones.forEach(s => s.style.display = 'none');
         }
+
         window.onload = function() {
             const nombreGuardado = sessionStorage.getItem('nombreUsuario');
-            if (nombreGuardado) {
+
+            if (nombreGuardado && nombreGuardado !== "") {
                 document.getElementById('saludo').textContent = `¡Hola, ${nombreGuardado}!`;
                 document.getElementById('modal').style.display = 'none';
                 document.getElementById('menuOpciones').style.display = 'grid';
+                document.getElementById('btnSalir').style.display = 'block';
+            } else {
+                document.getElementById('modal').style.display = 'flex';
+                document.getElementById('menuOpciones').style.display = 'none';
+                document.getElementById('btnSalir').style.display = 'none';
             }
-        };
-
+        }
     </script>
 </body>
 </html>
