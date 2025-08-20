@@ -1,4 +1,4 @@
-package com.gerald.proyecto;
+    package com.gerald.proyecto;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,5 +23,9 @@ public class MenuController {
     @GetMapping("/adivina")
     public String adivina() {
         return "adivina"; // archivo clima.html
+    }
+    @GetMapping("/edad")
+    public String edad() {
+        return "edad"; // archivo clima.html
     }
 }
