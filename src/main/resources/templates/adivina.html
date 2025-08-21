@@ -2,29 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Adivina el numero</title>
+    <title>Adivina el Número</title>
     <style>
-        body {
-            background: linear-gradient(to bottom, #0a1f44, #000000);
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        h1 { font-size: 3em; }
-        a { color: #1e3c72; margin-top: 20px; text-decoration: none; font-size: 1.2em; }
-        a:hover { color: #3e5ca5; }
+        body { background: linear-gradient(to bottom, #0a1f44, #000000); color: white; font-family: Arial, sans-serif;
+               display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        h1 { font-size: 3em; margin-bottom: 20px; }
+        input, button { padding: 10px; font-size: 1.2em; border-radius: 6px; border: none; margin: 10px; }
+        button { background-color: #1e3c72; color: white; cursor: pointer; }
+        button:hover { background-color: #3e5ca5; }
+        .btnVolver { margin-top: 20px; padding: 10px 20px; font-size: 1.2em; border: none; border-radius: 8px;
+                     background-color: #ff4d4d; color: white; cursor: pointer; }
+        .btnVolver:hover { background-color: #ff1a1a; }
     </style>
 </head>
 <body>
-    <h1>Página Adivina</h1>
-    <div id="clima" class="seccion">
-    <a href="#" onclick="volverMenu()">Volver al Menú</a>
-</div>
+    <h1>Adivina el Número</h1>
+    <form action="/adivina" method="post">
+        <label>Ingresa tu intento:</label>
+        <input type="number" name="intento" required>
+        <button type="submit">Probar</button>
+    </form>
+
+    <div th:if="${mensaje}">
+        <p><b th:text="${mensaje}"></b></p>
+    </div>
+
+    <button class="btnVolver" onclick="volverMenu()">Volver al Menú</button>
 </body>
+
+
 <script>
     function volverMenu() {
      window.location.href = '/menu'; 
